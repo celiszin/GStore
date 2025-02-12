@@ -1,0 +1,2 @@
+# GStore
+Projeto pro lin 

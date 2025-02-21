@@ -84,7 +84,7 @@ namespace GStore.Data;
                 NormalizedEmail = "TESTE153OVO@GMAIL.COM",
                 EmailConfirmed = true,
                 Nome = "Celso Henrique Alves",
-                DataNascimento = DataTime.Parse("05/06/2006"),
+                DataNascimento = DateTime.Parse("05/06/2006"),
             }
 
         };

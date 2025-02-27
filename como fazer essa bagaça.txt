@@ -1,0 +1,25 @@
+git config --global --replace-all user.name celiszin
+git config --global user.email teste153ovo@gmail.com
+
+dotnet new sln --name GStore
+dotnet new mvc -o GStore
+dotnet sln add GStore\GStore.csproj
+dotnet add package Microsoft.EntityFrameworkCore --version 9.0.0
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 9.0.2
+dotnet add package MySql.EntityFrameworkCore --version 9.0.0
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.2
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 9.0.2
+
+criar as camadas de dados
+
+Criar classe de contexto
+
+Configurar a ConecctionString appsetings.json
+
+configura os serviços Context e Identity no program.cs
+
+cd GStore
+
+executar xampp e o MySql
+
+dotnet watch run

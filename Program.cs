@@ -8,12 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//Conexao banco de dados
+// Conexão com o banco de dados
 string conexao = builder.Configuration.GetConnectionString("GStoreConn");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(conexao)
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseMySQL(conexao)
 );
 
-//Configuração de Identity
+// Configuração do Identity
 builder.Services.AddIdentity<Usuario, IdentityRole>(
     options => options.SignIn.RequireConfirmedEmail = false
 ).AddEntityFrameworkStores<AppDbContext>()
@@ -23,11 +24,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var contexto = scope.ServiceProvider
-    .GetRequiredService<AppDbContext>();
+    var contexto = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await contexto.Database.EnsureCreatedAsync();
 }
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -13,7 +13,6 @@ namespace GStore.Controllers
     public class CategoriasController : Controller
     {
         private readonly AppDbContext _context;
-
         private readonly IWebHostEnvironment _host;
 
         public CategoriasController(AppDbContext context, IWebHostEnvironment host)
@@ -64,22 +63,22 @@ namespace GStore.Controllers
                 _context.Add(categoria);
                 await _context.SaveChangesAsync();
 
-                if (Arquivo != null )
+                if (Arquivo !=null)
                 {
                     string nomeArquivo = categoria.Id + Path.GetExtension(Arquivo.FileName);
                     string caminho = Path.Combine(_host.WebRootPath, "img\\categorias");
                     string novoArquivo = Path.Combine(caminho, nomeArquivo);
-                    using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                    using (var stream = new FileStream(nomeArquivo, FileMode.Create))
                     {
                         Arquivo.CopyTo(stream);
                     }
-                        categoria.Foto = "\\img\\categorias" + nomeArquivo;
-                        await _context.SaveChangesAsync();
+                    categoria.Foto = "\\img\\categorias\\" + nomeArquivo;
+                    await _context.SaveChangesAsync();
                 }
 
+                
                 return RedirectToAction(nameof(Index));
             }
-            TempData["Success"] = "Categoria Cadastrada Com Sucesso";
             return View(categoria);
         }
 

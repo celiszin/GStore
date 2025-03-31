@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GStore.Data;
 using GStore.Models;
@@ -65,14 +60,16 @@ namespace GStore.Controllers
 
                 if (Arquivo !=null)
                 {
-                    string nomeArquivo = categoria.Id + Path.GetExtension(Arquivo.FileName);
+                    string filename = categoria.Id + Path.GetExtension(Arquivo.FileName);
                     string caminho = Path.Combine(_host.WebRootPath, "img\\categorias");
-                    string novoArquivo = Path.Combine(caminho, nomeArquivo);
-                    using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                    string novoArquivo = Path.Combine(caminho, filename);
+                    using (var stream = new FileStream(filename, FileMode.Create))
                     {
                         Arquivo.CopyTo(stream);
                     }
+                    categoria.Foto = "\\img\\categorias\\" + filename;
                     await _context.SaveChangesAsync();
+
                 }
                 TempData["Sucess"] = "Categoria Cadastrada com Sucesso!";
                 return RedirectToAction(nameof(Index));
@@ -112,19 +109,19 @@ namespace GStore.Controllers
             {
                 try
                 {
-                   if (Arquivo != null)
-                   {
-                    string filename = categoria.Id + Path.GetExtension(Arquivo.FileName);
-                    string caminho = Path.Combine(_host.WebRootPath, "img\\categorias");
-                    string novoArquivo = Path.Combine(caminho, filename);
-                    using(var stream = new FileStream(novoArquivo, FileMode.Create))
+                    if (Arquivo != null)
                     {
-                        Arquivo.CopyTo(stream);
+                        string filename = categoria.Id + Path.GetExtension(Arquivo.FileName);
+                        string caminho = Path.Combine(_host.WebRootPath, "img\\categorias");
+                        string novoArquivo = Path.Combine(caminho, filename);
+                        using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                        {
+                            Arquivo.CopyTo(stream);
+                        }
+                        categoria.Foto = "\\img\\categorias\\" + filename;
                     }
-                    categoria.Foto = "\\img\\categoria\\" + filename;
-                   } 
-                   _context.Update(categoria);
-                   await _context.SaveChangesAsync();
+                    _context.Update(categoria);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -137,7 +134,7 @@ namespace GStore.Controllers
                         throw;
                     }
                 }
-                TempData["Sucess"] = "Categoria Alterada com Sucesso!";
+                TempData["Success"] = "Categoria Alterada com Sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
@@ -173,7 +170,7 @@ namespace GStore.Controllers
             }
 
             await _context.SaveChangesAsync();
-            TempData["Sucess"] = "Categoria Excluida Com Sucesso";
+            TempData["Sucess"] = "Categoria Excluída com Sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

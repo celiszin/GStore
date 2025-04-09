@@ -1,4 +1,4 @@
-namespace Store.Helpers;
+namespace GStore.Helpers;
 
 public static class TranslateIdentityErrors
 {

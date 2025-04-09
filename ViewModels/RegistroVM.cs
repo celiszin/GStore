@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Store.ViewModels;
+namespace GStore.ViewModels;
 
 public class RegistroVM
 {

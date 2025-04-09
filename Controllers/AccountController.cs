@@ -1,16 +1,16 @@
 using System.Net.Mail;
 using System.Security.Claims;
-using Store.Data;
-using Store.Helpers;
-using Store.Models;
-using Store.ViewModels;
+using GStore.Data;
+using GStore.Helpers;
+using GStore.Models;
+using GStore.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 
 
 
-namespace Store.Controllers;
+namespace GStore.Controllers;
 public class AccountController : Controller
 {
     private readonly ILogger<AccountController> _logger;

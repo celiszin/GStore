@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Store.ViewModels;
+namespace Gtore.ViewModels;
 
 public class LoginVM
 {   

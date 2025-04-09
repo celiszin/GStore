@@ -59,7 +59,7 @@ public class UsuarioService : IUsuarioService
         return result.Succeeded;
     }
 
-    public async Task<UsuarioVM> GetUsuarioLogado()
+    public async Task<Usu> GetUsuarioLogado()
     {
         var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (userId == null)

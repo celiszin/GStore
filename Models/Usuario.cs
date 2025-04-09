@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace Store.Models;
+namespace GStore.Models;
 
 [Table("usuario")]
 public class Usuario : IdentityUser

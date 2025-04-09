@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Store.Models;
+using GStore.Models;
 
-namespace Store.Data;
+namespace GStore.Data;
 
 public class AppDbContext :IdentityDbContext<Usuario>
 {

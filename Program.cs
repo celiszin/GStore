@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Store.Data;
-using Store.Models;
+using GStore.Data;
+using GStore.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

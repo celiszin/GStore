@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace Store.Models;
+namespace GStore.Models;
 
 [Table("categoria")]
 public class Categoria

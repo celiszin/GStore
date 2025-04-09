@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Store.Data;
-using Store.Models;
-using Store.ViewModels;
+using GStore.Data;
+using GStore.Models;
+using GStore.ViewModels;
 
-namespace Store.Controllers;
+namespace GStore.Controllers;
 
 public class HomeController : Controller
 {

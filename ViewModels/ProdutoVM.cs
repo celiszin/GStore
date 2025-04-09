@@ -1,6 +1,6 @@
-using Store.Models;
+using GStore.Models;
 
-namespace Store.ViewModels;
+namespace GStore.ViewModels;
 
 public class ProdutoVM
 {

@@ -1,9 +1,15 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GStore.Data;
-using GStore.Models;
 
-namespace GStore.Controllers
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Store.Data;
+using Store.Models;
+
+namespace Store.Controllers
 {
     public class CategoriasController : Controller
     {
@@ -58,20 +64,19 @@ namespace GStore.Controllers
                 _context.Add(categoria);
                 await _context.SaveChangesAsync();
 
-                if (Arquivo !=null)
+                if (Arquivo != null)
                 {
-                    string filename = categoria.Id + Path.GetExtension(Arquivo.FileName);
+                    string nomeArquivo = categoria.Id + Path.GetExtension(Arquivo.FileName);
                     string caminho = Path.Combine(_host.WebRootPath, "img\\categorias");
-                    string novoArquivo = Path.Combine(caminho, filename);
-                    using (var stream = new FileStream(filename, FileMode.Create))
+                    string novoArquivo = Path.Combine(caminho, nomeArquivo);
+                    using (var stream = new FileStream(novoArquivo, FileMode.Create))
                     {
                         Arquivo.CopyTo(stream);
                     }
-                    categoria.Foto = "\\img\\categorias\\" + filename;
+                    categoria.Foto = "\\img\\categorias\\" + nomeArquivo;
                     await _context.SaveChangesAsync();
-
                 }
-                TempData["Sucess"] = "Categoria Cadastrada com Sucesso!";
+                TempData["Success"] = "Categoria Cadastrada com Sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
@@ -170,7 +175,7 @@ namespace GStore.Controllers
             }
 
             await _context.SaveChangesAsync();
-            TempData["Sucess"] = "Categoria Excluída com Sucesso!";
+            TempData["Success"] = "Categoria Excluida com Sucesso";
             return RedirectToAction(nameof(Index));
         }
 

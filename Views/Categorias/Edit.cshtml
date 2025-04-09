@@ -1,7 +1,6 @@
-@model GStore.Models.Categoria
-
+@model Store.Models.Categoria
 @{
-    ViewData["Title"] = "Categorias";
+    ViewData["Title"] = "Categoria";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -15,13 +14,13 @@
             <div class="row">
                 <div class="col-md-8 col-lg-10">
                     <div class="mb-3">
-                        <label asp-for="Nome" class="form-label"/></label>
+                        <label asp-for="Nome" class="form-label"></label>
                         <input asp-for="Nome" class="form-control p-2 border-dark border-2 rounded-1" />
                         <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Foto" class="control-label"></label>
-                        <input type="file" id="Arquivo" name="Arquivo" 
+                    <div class="mb-3">
+                        <label asp-for="Foto" class="form-label"></label>
+                        <input type="file" id="Arquivo" name="form-control"
                             class="form-control p-2 border-dark border-2 rounded-1"/>
                     </div>
                 </div>
@@ -29,14 +28,14 @@
                     <label for="Preview" class="form-label">Prévia</label>
                     <img id="Preview" src="@Model.Foto" class="img-fluid p-2 border-dark border-2 rounded-1">
                 </div>
-            </div>
-            <div class="d-flex mt-4"
-                <button type="submit" class="btn btn-outline-success me-2">
-                    <i class="fas fa-save me-1"></i> Salvar
-                </button>
-                <a asp-action="Index" class="btn btn-outline-danger">
-                    <i class="fas fa-cancel me-1"></i> Cancelar
-                </a>
+                <div class="d-flex mt-4">
+                    <button type="submit" class="btn btn-outline-success me-2">
+                        <i class="fas fas-cancel me-1"></i> Salvar
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-danger">
+                        <i class="fas fas-cancel me-1"></i> Cancelar
+                    </a>
+                </div> 
             </div>
         </form>
     </div>
@@ -45,13 +44,12 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial.cshtml"></partial>
     <script>
-        document.querySelector("input[type='file']").addEventListener('change',$ function () {
-            if (this.file &&arguments this.files[0]) {
+        document.querySelector("input[type='file']").addEventListener('change', function (){
+            if (this.files &&$ this.files[0]){
                 var img = document.getElementById("Preview");
-                img.scr = URL.createObjectURL(this.files[0]);
+                img.src = URL.createObjectURL(this.files[0]);
             }
         });
-        
     </script>
 }
 

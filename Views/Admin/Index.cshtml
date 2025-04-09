@@ -1,12 +1,11 @@
 @{
-    ViewData["Title"] = "Área Administrativa";
+    ViewData["Title"] = "Área Adminstrativa";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
 }
 
 <h1>@ViewData["Title"]</h1>
-
 <br><br>
-<div class="container-fluid px-4">
-<a asp-controller="Categorias" class="btn btn-primary" asp-action="Index"><i class="fas fa-add me-1"></i>Categorias</a>
-<a asp-controller="Produtos" class="btn btn-primary" asp-action="Index"><i class="fas fa-add me-1"></i>Produtos</a>
-</div>
+<a asp-controller="Categorias" asp-action="Index">Categorias</a>
+<br><br>
+<a asp-controller="Produtos" asp-action="Index">Produtos</a>

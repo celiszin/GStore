@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GStore.Models;
+namespace Store.Models;
 
 [Table("produto_foto")]
 public class ProdutoFoto
@@ -9,17 +9,18 @@ public class ProdutoFoto
     [Key]
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "Por favor, informe o Produto")]
+    [Required (ErrorMessage = "Informe o nome do Produto")]
     public int ProdutoId { get; set; }
+
     [ForeignKey(nameof(ProdutoId))]
     public Produto Produto { get; set; }
 
     [Required]
     [StringLength(300)]
-    [Display(Name = "Arquivo da Foto")]
+    [Display(Name ="Arquivo da foto")]
     public string ArquivoFoto { get; set; }
 
     [Display(Name = "Descrição")]
-    [StringLength(30, ErrorMessage = "A Descrição deve possuir no máximo 30 caracteres")]
+    [StringLength(50, ErrorMessage = "A descrição deve possuir no máximo 50 caracteres")]
     public string Descricao { get; set; }
 }

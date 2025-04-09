@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GStore.Data;
-using GStore.Models;
+using Store.Data;
+using Store.Models;
 
-namespace GStore.Controllers
+namespace Store.Controllers
 {
     public class ProdutosController : Controller
     {

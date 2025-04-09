@@ -10,10 +10,10 @@
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
             toast.onmouseleave = Swal.resumeTimer;
-        }  
+        }
     });
 
-    const message cdn= @Html.Raw(Json.Serialize(TempData["Success"]));
+    const message = @Html.Raw(Json.Serialize(TempData["Success"]))
 
     if (message) {
         Toast.fire({
@@ -21,6 +21,4 @@
             title: message
         });
     }
-
-
 </script>

@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GStore.Data;
 using GStore.Models;
+using GStore.Data;
+using Microsoft.EntityFrameworkCore;
 using GStore.ViewModels;
 
 namespace GStore.Controllers;
@@ -21,9 +21,9 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         List<Produto> produtos = _db.Produtos
-        .Where(p => p.Destaque)
-        .Include(p => p.Fotos)
-        .ToList();
+            .Where(p => p.Destaque)
+            .Include(p => p.Fotos)
+            .ToList();
         return View(produtos);
     }
 
@@ -34,15 +34,14 @@ public class HomeController : Controller
             .Include(p => p.Categoria)
             .Include(p => p.Fotos)
             .SingleOrDefault();
-       
-       ProdutoVM produtoVM = new(){
-            Produto = produto
-       };
-       produtoVM.Produtos = _db.Produtos
-            .Where(p => p.CategoriaId == produto.CategoriaId)
-            .Include(p => p.Fotos)
-            .Take(4).ToList();
 
+        ProdutoVM produtoVM = new()
+        {
+            Produto = produto
+        };
+        produtoVM.Produtos = _db.Produtos
+            .Where(p => p.CategoriaId == produto.CategoriaId && p.Id != produto.Id
+            ).Take(4).Include(p => p.Fotos).ToList();
         return View(produtoVM);
     }
 

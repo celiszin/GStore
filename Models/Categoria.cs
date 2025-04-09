@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace GStore.Models;
 
 [Table("categoria")]
@@ -17,5 +16,4 @@ public class Categoria
 
     [StringLength(300)]
     public string Foto { get; set; }
-
 }

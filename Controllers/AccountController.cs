@@ -7,9 +7,6 @@ using GStore.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-
-
-
 namespace GStore.Controllers;
 public class AccountController : Controller
 {
@@ -33,9 +30,6 @@ public class AccountController : Controller
         _host = host;
         _db = db;
     }
-    
-
-
 
     [HttpGet]
     public IActionResult Login(string returnUrl)
@@ -45,13 +39,13 @@ public class AccountController : Controller
             UrlRetorno = returnUrl ?? Url.Content("~/")
         };
         return View(login);
-    } 
+    }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginVM login)
     {
-        if(ModelState.IsValid)
+        if (ModelState.IsValid)
         {
             string userName = login.Email;
             if (IsValidEmail(login.Email))
@@ -65,19 +59,19 @@ public class AccountController : Controller
                 userName, login.Senha, login.Lembrar, lockoutOnFailure: true
             );
 
-            if(result.Succeeded){
+            if (result.Succeeded) {
                 _logger.LogInformation($"Usuário {login.Email} acessou o sistema");
                 return LocalRedirect(login.UrlRetorno);
             }
 
-            if(result.IsLockedOut){
+            if (result.IsLockedOut) {
                 _logger.LogWarning($"Usuário {login.Email} está bloqueado");
-                ModelState.AddModelError("", "Sua conta está bloqueada, aguarde alguns minutos e tente novamente");
+                ModelState.AddModelError("", "Sua conta está bloqueada, aguarde alguns minutos e tente novamente!");
             }
             else
-            if(result.IsNotAllowed){
+            if (result.IsNotAllowed) {
                 _logger.LogWarning($"Usuário {login.Email} não confirmou sua conta");
-                ModelState.AddModelError(string.Empty, "Sua conta não está confirmada, verifique seu email!");
+                ModelState.AddModelError(string.Empty, "Sua conta não está confirmada, verifique seu emial!");
             }
             else
                 ModelState.AddModelError(string.Empty, "Usuário e/ou Senha Inválidos!");
@@ -94,18 +88,67 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-
     [HttpGet]
     public IActionResult Registro()
     {
         RegistroVM register = new();
         return View(register);
     }
+    
 
-      public bool IsValidEmail(string email)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Registro(RegistroVM registro)
     {
+        if(ModelState.IsValid)
+        {
+            var usuario = Activator.CreateInstance<Usuario>();
+            usuario.Nome = registro.Nome;
+            usuario.DataNascimento = (DateTime)registro.DataNascimento;
+            usuario.UserName = registro.Email;
+            usuario.NormalizedUserName = registro.Email.ToUpper();
+            usuario.Email = registro.Email;
+            usuario.NormalizedEmail = registro.Email.ToUpper();
+            usuario.EmailConfirmed = true;
+            var result = await _userManager.CreateAsync(usuario, registro.Senha);
+
+            if(result.Succeeded)
+            {
+                _logger.LogInformation($"Novo usuário registrado com o email {registro.Email}.");
+
+                await _userManager.AddToRoleAsync(usuario, "Cliente");
+
+                if (registro.Foto != null)
+                {
+                    string nomeArquivo = usuario.Id + Path.GetExtension(registro.Foto.FileName);
+                    string caminho = Path.Combine(_host.WebRootPath, @"img\usuarios");
+                    string novoArquivo = Path.Combine(caminho, nomeArquivo);
+                    using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                    {
+                        registro.Foto.CopyTo(stream);
+                    }
+                    usuario.Foto = @"\img\usuarios\" + nomeArquivo;
+                    await _db.SaveChangesAsync();
+                }
+                TempData["Success"] = "Conta Criada com Sucesso!";
+                return RedirectToAction(nameof(Login));
+            }
+
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(string.Empty, TranslateIdentityErrors.TranslateErrorMessage(error.Code));
+        }
+        return View(registro);
+    }
+
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
+    
+    public bool IsValidEmail(string email)
+    {
+        
+        
         try
         {
             MailAddress m = new(email);
@@ -116,7 +159,5 @@ public class AccountController : Controller
             return false;
         }
     }
-
-
 
 }

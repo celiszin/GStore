@@ -1,10 +1,4 @@
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GStore.Data;
 using GStore.Models;
@@ -64,19 +58,20 @@ namespace GStore.Controllers
                 _context.Add(categoria);
                 await _context.SaveChangesAsync();
 
-                if (Arquivo != null)
+                if (Arquivo !=null)
                 {
-                    string nomeArquivo = categoria.Id + Path.GetExtension(Arquivo.FileName);
+                    string filename = categoria.Id + Path.GetExtension(Arquivo.FileName);
                     string caminho = Path.Combine(_host.WebRootPath, "img\\categorias");
-                    string novoArquivo = Path.Combine(caminho, nomeArquivo);
-                    using (var stream = new FileStream(novoArquivo, FileMode.Create))
+                    string novoArquivo = Path.Combine(caminho, filename);
+                    using (var stream = new FileStream(filename, FileMode.Create))
                     {
                         Arquivo.CopyTo(stream);
                     }
-                    categoria.Foto = "\\img\\categorias\\" + nomeArquivo;
+                    categoria.Foto = "\\img\\categorias\\" + filename;
                     await _context.SaveChangesAsync();
+
                 }
-                TempData["Success"] = "Categoria Cadastrada com Sucesso!";
+                TempData["Sucess"] = "Categoria Cadastrada com Sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
@@ -175,7 +170,7 @@ namespace GStore.Controllers
             }
 
             await _context.SaveChangesAsync();
-            TempData["Success"] = "Categoria Excluida com Sucesso";
+            TempData["Sucess"] = "Categoria Excluída com Sucesso!";
             return RedirectToAction(nameof(Index));
         }
 
